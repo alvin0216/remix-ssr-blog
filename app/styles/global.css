@@ -28,6 +28,12 @@ ul {
 .ant-comment-actions {
   margin-top: 0;
 }
+.ant-comment-actions .delete-icon {
+  display: none;
+}
+.ant-comment-actions:hover .delete-icon {
+  display: block;
+}
 
 .blog-list-item:hover {
   box-shadow: 0 15px 30px 0 rgb(0 0 0 / 10%);

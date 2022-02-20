@@ -1,4 +1,5 @@
 import { BackTop, Col, Row } from 'antd';
+import useMount from '~/hooks/useMount';
 
 import Aside from '../Aside/Aside';
 import BHeader from '../Header/Header';
@@ -19,7 +20,10 @@ const BLayout: React.FC<BLayoutProps> = (props) => {
         <Col {...siderLayout}>
           <Aside />
         </Col>
-        <Col {...contentLayout} className='pl-20px overflow-y-auto' style={{ height: 'calc(100vh - 64px - 40px)' }}>
+        <Col
+          {...contentLayout}
+          className='app-main pl-20px overflow-y-auto'
+          style={{ height: 'calc(100vh - 64px - 40px)' }}>
           {props.children}
         </Col>
       </Row>

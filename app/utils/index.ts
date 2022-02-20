@@ -68,3 +68,40 @@ export async function parseFormData<T = any>(request: Request) {
 
   return result as T;
 }
+
+export interface HashListItem {
+  tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+  title: string;
+  href: string;
+  children: HashListItem[];
+}
+
+export function getHashList(content: string): HashListItem[] {
+  const pattern = /<(h[1-6])[\s\S]+?(?=<\/\1>)/g;
+  const list: HashListItem[] = [];
+  function pushItem(arr: HashListItem[], item: HashListItem) {
+    const len = arr.length;
+    const matchItem = arr[len - 1];
+    if (matchItem && matchItem.tag !== item.tag) {
+      pushItem(matchItem.children, item);
+    } else {
+      arr.push(item);
+    }
+  }
+  // @ts-ignore
+  content.replace(pattern, ($0, $1) => {
+    const title = $0.replace(/.*?>/, '');
+    const startIndex = $0.indexOf('"');
+    const endIndex = $0.indexOf('">');
+
+    const href = `#${$0.slice(startIndex + 1, endIndex)}`;
+    const currentItem = {
+      tag: $1, // 标签类型
+      title,
+      href,
+      children: [],
+    };
+    pushItem(list, currentItem);
+  });
+  return list;
+}

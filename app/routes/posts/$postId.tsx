@@ -1,13 +1,17 @@
-import { Divider } from 'antd';
+import { Anchor, Divider } from 'antd';
 import { ActionFunction, LoaderFunction, useLoaderData, useOutletContext } from 'remix';
 import { api_add_comment, api_add_reply, api_remove_comment, api_remove_reply } from '~/api.server';
 import Discuss, { DiscussListItem } from '~/components/Discuss/Discuss';
 import TagCate from '~/components/TagCate/TagCate';
-import { getDiscussCount, parseFormData, translateMd } from '~/utils';
+import {
+    getDiscussCount, getHashList, HashListItem, parseFormData, parseUrl, translateMd
+} from '~/utils';
 import { db } from '~/utils/db.server';
 
 import { CalendarOutlined } from '@ant-design/icons';
 import { Category, Comment, Post, Reply, Tag, User } from '@prisma/client';
+
+import { PostListItem } from '../api/posts';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const data = await db.post.findUnique({
@@ -30,7 +34,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (data) {
     data.content = translateMd(data.content);
   }
-  return { data, postId: params.postId };
+  return { data, postId: params.postId, hashList: data?.content ? getHashList(data.content) : [] };
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -43,45 +47,62 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 interface LoaderData {
-  data: Post & {
-    tag: Tag[];
-    cate: Category[];
-    comment: DiscussListItem[];
-  };
+  data: PostListItem;
   postId: string;
+  hashList: HashListItem[];
 }
 
 const PostPage: React.FC = (props) => {
-  const { data, postId } = useLoaderData<LoaderData>();
+  const { data, postId, hashList } = useLoaderData<LoaderData>();
   const count = getDiscussCount(data.comment);
   const context = useOutletContext<GlobalContext>();
 
+  const renderHashLink = (hashList: HashListItem[]) => {
+    return hashList.map((h) => (
+      <Anchor.Link key={h.href} href={h.href} title={h.title}>
+        {h.children?.length > 0 && renderHashLink(h.children)}
+      </Anchor.Link>
+    ));
+  };
+
   return (
-    <div className='xl:pr-275px pb-20px'>
-      <div className='text-center mb-20px pb-20px ' style={{ borderBottom: '1px solid #e8e8e8' }}>
-        <h1 className='color-#0d1a26 text-1.7em'>{data.title}</h1>
+    <div className='pb-20px flex'>
+      <div className='flex-1 pr-20px'>
+        <div className='text-center mb-20px pb-20px ' style={{ borderBottom: '1px solid #e8e8e8' }}>
+          <h1 className='color-#0d1a26 text-1.7em'>{data.title}</h1>
 
-        <div>
-          <CalendarOutlined /> &nbsp; Posted on &nbsp;<span>{'2022-02-01'}</span>
-          <TagCate tag={data.tag} cate={data.cate} />
-          <Divider type='vertical' />
-          <span>
-            <img className='wh-14 mr-4px' src='https://gitee.com/alvin0216/cdn/raw/master/images/comment.png' />
-            {count}
-          </span>
-          <span className='ml-8px'>
-            <img
-              className='wh-14 mr-4px -translate-y-1px'
-              src='https://gitee.com/alvin0216/cdn/raw/master/images/view.png'
-            />
-            <span>{data.view}</span>
-          </span>
+          <div>
+            <CalendarOutlined /> &nbsp; Posted on &nbsp;<span>{'2022-02-01'}</span>
+            <TagCate tag={data.tag} cate={data.cate} />
+            <Divider type='vertical' />
+            <span>
+              <img className='wh-14 mr-4px' src='https://gitee.com/alvin0216/cdn/raw/master/images/comment.png' />
+              {count}
+            </span>
+            <span className='ml-8px'>
+              <img
+                className='wh-14 mr-4px -translate-y-1px'
+                src='https://gitee.com/alvin0216/cdn/raw/master/images/view.png'
+              />
+              <span>{data.view}</span>
+            </span>
+          </div>
         </div>
+
+        <div className='article' dangerouslySetInnerHTML={{ __html: data.content }} />
+
+        <Discuss comment={data.comment} context={context} postId={postId} />
       </div>
-
-      <div className='article' dangerouslySetInnerHTML={{ __html: data.content }} />
-
-      <Discuss comment={data.comment} context={context} postId={postId} />
+      <Anchor
+        className='w-275px'
+        // @ts-ignore
+        getContainer={() => {
+          const dom = document.querySelector('.app-main');
+          return dom;
+        }}>
+        {renderHashLink(hashList)}
+      </Anchor>
+      ,
     </div>
   );
 };

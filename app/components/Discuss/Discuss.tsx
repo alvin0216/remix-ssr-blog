@@ -165,7 +165,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
                       cancelText='取消'
                       okText='确认'
                       onConfirm={() => submit(undefined, { actionType: 'api_remove_comment', commentId: c.id })}>
-                      <div className='text-#f00'>
+                      <div className='delete-icon text-#f00'>
                         <DeleteOutlined className='cursor-pointer' style={{ verticalAlign: 'middle' }} />
                       </div>
                     </Popconfirm>
@@ -209,7 +209,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
                             cancelText='取消'
                             okText='确认'
                             onConfirm={() => submit(undefined, { actionType: 'api_remove_reply', replyId: r.id })}>
-                            <div className='text-#f00'>
+                            <div className='delete-icon text-#f00'>
                               <DeleteOutlined className='cursor-pointer' style={{ verticalAlign: 'middle' }} />
                             </div>
                           </Popconfirm>

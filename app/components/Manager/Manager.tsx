@@ -2,7 +2,7 @@ import { Table } from 'antd';
 import { useEffect } from 'react';
 import { useActionData, useFetcher, useSubmit } from 'remix';
 import useRemixFormSubmit from '~/hooks/useRemixFormSubmit';
-import { PostListItem } from '~/routes/api/queryPosts';
+import { PostListItem } from '~/routes/api/posts';
 
 interface ManagerProps {}
 
@@ -10,7 +10,7 @@ const Manager: React.FC<ManagerProps> = (props) => {
   const fetcher = useFetcher<Page<PostListItem>>();
 
   const loadList = async () => {
-    fetcher.submit({}, { action: '/api/queryPosts', method: 'post' });
+    fetcher.submit({ actionType: '' }, { action: '/api/posts', method: 'post' });
   };
 
   useEffect(() => {

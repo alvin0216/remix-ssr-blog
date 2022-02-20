@@ -7,7 +7,7 @@ import {
 import TagCate from '~/components/TagCate/TagCate';
 import { getDiscussCount, parseUrl, queryToUrl, translateMd } from '~/utils';
 
-import { getPostList, PostListItem } from './api/queryPosts';
+import { getPostList, PostListItem } from './api/posts';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const query = parseUrl(request.url);
@@ -111,6 +111,8 @@ export default function IndexPage() {
               simple={viewWidth <= 736}
             />
           </ul>
+
+          {/* list */}
         </div>
       )}
     </div>
