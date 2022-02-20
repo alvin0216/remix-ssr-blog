@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 文章
+model Post {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  title        String
+  content      String   @db.Text
+  // 阅读次数
+  view         Int      @default(0)
+  tag          Tag[]
+  cate         Category[]
+  comment      Comment[]
+}
+
+
+// 标签
+model Tag {
+  id           String   @id @default(uuid())
+  name         String
+  post         Post     @relation(fields: [postId], references: [id])
+  postId       String
+}
+
+// 分类
+model Category {
+  id           String   @id @default(uuid())
+  name         String
+  post         Post     @relation(fields: [postId], references: [id])
+  postId       String
+}
+
+
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  username     String   
+  // base on GithubInfo
+  github       String   @db.Text
+  comment      Comment[]
+  reply        Reply[]
+}
+
+// 评论表
+model Comment {
+  id           String   @id @default(uuid())
+  content      String   @db.Text
+  createdAt    DateTime @default(now())
+  
+  post         Post     @relation(fields: [postId], references: [id])
+  postId       String
+  
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+
+  reply        Reply[] 
+}
+
+model Reply {
+  id           String   @id @default(uuid())
+  content      String   @db.Text
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+
+  comment      Comment  @relation(fields: [commentId], references: [id])
+  commentId    String
+
+  // 评论回复评论
+  replyId      String
+}

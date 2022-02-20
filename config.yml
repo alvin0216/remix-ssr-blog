@@ -1,0 +1,36 @@
+# github 登录名，唯一标识是不是 master [博主 github 登录名]
+githubLoginName: alvin0216
+
+# 博客logo
+blogLogo: /logo.png
+
+# 博客名称
+blogName: Peace and Love
+
+# 侧边栏
+avatar: /avatar.png
+
+# 侧边栏 图片下面的别名
+asideName: Alvin
+
+# 座右铭
+motto: Web Developer & Designer
+
+# 社交平台 github icon 内置
+social:
+  github:
+    link: https://github.com/alvin0216
+    icon: https://gitee.com/alvin0216/cdn/raw/master/images/github.png
+  juejin:
+    link: https://juejin.im/user/5acac6c4f265da2378408f92
+    icon: https://gitee.com/alvin0216/cdn/raw/master/images/juejin.png
+
+# 赞助
+# 感谢词
+donateWord: 如果你觉得主题还不错，可以为作者贡献一杯奶茶。
+donate:
+  AliPay: /alipay.png
+  WeChat: /wechat.png
+
+# 备案号
+record: '粤ICP备20056911号'
