@@ -4,13 +4,14 @@ import { ActionFunction, LoaderFunction, useLoaderData, useOutletContext } from 
 import { api_add_comment, api_add_reply, api_remove_comment, api_remove_reply } from '~/api.server';
 import Discuss, { DiscussListItem } from '~/components/Discuss/Discuss';
 import TagCate from '~/components/TagCate/TagCate';
+import { PostListItem } from '~/export.types';
 import {
     getDiscussCount, getHashList, HashListItem, parseFormData, parseUrl, translateMd
 } from '~/utils';
 
 import { CalendarOutlined } from '@ant-design/icons';
 
-import { api_get_post_by_id, PostListItem } from '../api/posts';
+import { api_get_post_by_id } from '../api/posts';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const data = await api_get_post_by_id(params.postId || '');

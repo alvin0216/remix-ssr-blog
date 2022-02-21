@@ -2,6 +2,8 @@ import { redirect } from 'remix';
 import { getUserProfile } from '~/auth.server';
 import { db } from '~/utils/db.server';
 
+import type { AddCommentParams, AddReplyParams } from '~/export.types';
+
 export const api_add_comment = async (request: Request, form: AddCommentParams) => {
   const user = await getUserProfile(request);
   await db.comment.create({

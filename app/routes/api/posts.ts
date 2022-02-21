@@ -5,11 +5,7 @@ import { db } from '~/utils/db.server';
 
 import { Category, Post, Tag } from '@prisma/client';
 
-export type PostListItem = Post & {
-  tag: Tag[];
-  cate: Category[];
-  comment: DiscussListItem[];
-};
+import type { PostListItem } from '~/export.types';
 
 export const action: ActionFunction = async ({ request }) => {
   const query = await parseFormData(request);
@@ -20,26 +16,33 @@ export async function api_get_posts(query: any): Promise<Page<PostListItem>> {
   const pageSize = query.pageSize || 10;
   const current = query.current || 1;
 
-  const keyword = query.k ? String(query.k) : undefined;
-  const where = keyword
+  const where = {
+    OR: query.k ? [{ title: { contains: String(query.k) } }, { content: String(query.k) }] : undefined,
+    tag: { every: { name: query.tag } },
+    cate: { every: { name: query.cate } },
+  };
+
+  const searchConfig: any = query.onlyPosts
     ? {
-        OR: [{ title: { contains: keyword } }, { content: keyword }],
+        select: { title: true, createdAt: true, id: true },
       }
-    : undefined;
+    : {
+        include: {
+          tag: true,
+          cate: true,
+          comment: {
+            include: {
+              reply: { select: { id: true } },
+            },
+          },
+        },
+      };
 
   const results = await db.post.findMany({
     take: pageSize,
     skip: (current - 1) * pageSize,
-    where: where,
-    include: {
-      tag: true,
-      cate: true,
-      comment: {
-        include: {
-          reply: { select: { id: true } },
-        },
-      },
-    },
+    where,
+    ...searchConfig,
   });
 
   const total = await db.post.count({ where });

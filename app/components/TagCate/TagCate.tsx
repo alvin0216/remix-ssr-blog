@@ -49,7 +49,7 @@ const TagCate: React.FC<TagCateProps> = (props) => {
 
           {props.cate.map((t, i) => (
             <TagCom key={t.id} color='#2db7f5'>
-              <Link to={`/tags/${t.name}`}>{t.name}</Link>
+              <Link to={`/categories/?cate=${t.name}`}>{t.name}</Link>
             </TagCom>
           ))}
         </>

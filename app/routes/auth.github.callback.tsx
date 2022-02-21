@@ -10,22 +10,4 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
     successRedirect: '/',
     failureRedirect: '/',
   });
-
-  // if (res?.profile) {
-  //   const user = await db.user.findUnique({ where: { id: res.profile.id } });
-  //   console.log(321321, user);
-  //   if (!user) {
-  //     db.user
-  //       .create({
-  //         data: {
-  //           username: res.profile.displayName,
-  //           github: JSON.stringify(res.profile._json),
-  //           id: res.profile.id,
-  //         },
-  //       })
-  //       .catch((e) => {
-  //         console.log('error', e);
-  //       });
-  //   }
-  // }
 };

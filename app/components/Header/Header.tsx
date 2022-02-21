@@ -31,7 +31,7 @@ const BHeader: React.FC<BHeaderProps> = (props) => {
   const query = parseUrl(search);
 
   const onSearch = (e: any) => {
-    naviagate(`/?${queryToUrl({ current: 1, k: e.target.value || undefined })}`);
+    naviagate(queryToUrl({ current: 1, k: e.target.value || undefined }));
   };
 
   return (

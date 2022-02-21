@@ -42,3 +42,11 @@ ul {
 .anchor a {
   color: #555;
 }
+
+.list-shadow {
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.list-shadow:hover {
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.2);
+}

@@ -22,7 +22,7 @@ const BLayout: React.FC<BLayoutProps> = (props) => {
         </Col>
         <Col
           {...contentLayout}
-          className='app-main pl-20px overflow-y-auto'
+          className='app-main px-20px pb-20px overflow-y-auto'
           style={{ height: 'calc(100vh - 64px - 40px)' }}>
           {props.children}
         </Col>

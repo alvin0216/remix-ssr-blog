@@ -5,9 +5,10 @@ import {
     Link, LoaderFunction, useLoaderData, useLocation, useNavigate, useOutletContext
 } from 'remix';
 import TagCate from '~/components/TagCate/TagCate';
+import { PostListItem } from '~/export.types';
 import { getDiscussCount, parseUrl, queryToUrl, translateMd } from '~/utils';
 
-import { api_get_posts, PostListItem } from './api/posts';
+import { api_get_posts } from './api/posts';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const query = parseUrl(request.url);
@@ -33,7 +34,7 @@ export default function IndexPage() {
   const context = useOutletContext<GlobalContext>();
 
   const handlePageChange = (current: number, pageSize: number) => {
-    naviagate(`/?${queryToUrl({ ...query, current, pageSize })}`);
+    naviagate(queryToUrl({ ...query, current, pageSize }));
   };
 
   useEffect(() => {
@@ -102,7 +103,7 @@ export default function IndexPage() {
               );
             })}
             <Pagination
-              className='float-right'
+              className='text-right'
               hideOnSinglePage
               current={data.current}
               pageSize={data.pageSize}
