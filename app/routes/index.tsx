@@ -42,7 +42,7 @@ export default function IndexPage() {
   }, []);
 
   return (
-    <div className='overflow-y-auto flex' style={{ height: 'calc(100vh - 64px - 40px)' }}>
+    <div className='flex ' style={{ height: 'calc(100vh - 64px - 40px)' }}>
       {query.k && data.total === 0 ? (
         <div className='flex justify-center flex-1'>
           <Result
@@ -63,6 +63,7 @@ export default function IndexPage() {
         <>
           <ul className='w-full xl:pr-292px'>
             {data.results.map((item) => {
+              // @ts-ignore
               const count = getDiscussCount(item.comment);
               return (
                 <li

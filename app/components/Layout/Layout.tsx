@@ -1,5 +1,4 @@
 import { BackTop, Col, Row } from 'antd';
-import useMount from '~/hooks/useMount';
 
 import Aside from '../Aside/Aside';
 import BHeader from '../Header/Header';
@@ -27,6 +26,8 @@ const BLayout: React.FC<BLayoutProps> = (props) => {
           {props.children}
         </Col>
       </Row>
+      {/* @ts-ignore */}
+      <BackTop target={() => document.querySelector('.app-main')} />
     </div>
   );
 };

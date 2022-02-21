@@ -50,3 +50,11 @@ ul {
 .list-shadow:hover {
   box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.2);
 }
+
+.ant-back-top-icon {
+  background-size: contain;
+}
+
+.ant-back-top-content:hover {
+  background-color: rgba(0, 0, 0, 0.65);
+}
