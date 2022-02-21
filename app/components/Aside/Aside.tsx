@@ -1,5 +1,8 @@
-import { Button, Divider, Popover, Space } from 'antd';
+import { Alert, Button, Divider, Popover, Space } from 'antd';
+import { Link } from 'remix';
 import config from '~/config.json';
+
+import { MenuFoldOutlined } from '@ant-design/icons';
 
 interface Social {
   [key: string]: {
@@ -32,6 +35,8 @@ const Aside: React.FC = (props) => {
       </ul>
 
       <Divider />
+
+      {/* <Alert message='Info Text' type='info' /> */}
 
       <Space>
         {config.donate && (
@@ -69,11 +74,15 @@ const Aside: React.FC = (props) => {
             <Button>打赞</Button>
           </Popover>
         )}
-
-        <Button>其他</Button>
       </Space>
 
-      <div>Powser By Alvin</div>
+      <div className='absolute bottom-0 w-full bg-#fff border-0 border-r-1 border-solid border-#ebedf0'>
+        <Divider className='!my-0' />
+        Theme design by{' '}
+        <a target='_blank' rel='noreferrer noopener' href='https://github.com/alvin0216/remix-ssr-blog'>
+          Alvin
+        </a>
+      </div>
     </aside>
   );
 };

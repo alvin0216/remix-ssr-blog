@@ -41,7 +41,7 @@ const BHeader: React.FC<BHeaderProps> = (props) => {
         boxShadow: '0 2px 8px #f0f1f2',
       }}>
       <Row>
-        <Col {...responsiveLeft} className='text-center lh-64px relative'>
+        <Col {...responsiveLeft} className='text-center lh-64px relative truncate'>
           <img src={config.blogLogo} alt='logo' className='w-8 h-8' />
           <span className='text-20px pl-10px'>{config.blogName}</span>
         </Col>

@@ -1,4 +1,5 @@
 import { Anchor, Divider } from 'antd';
+import dayjs from 'dayjs';
 import { ActionFunction, LoaderFunction, useLoaderData, useOutletContext } from 'remix';
 import { api_add_comment, api_add_reply, api_remove_comment, api_remove_reply } from '~/api.server';
 import Discuss, { DiscussListItem } from '~/components/Discuss/Discuss';
@@ -6,31 +7,13 @@ import TagCate from '~/components/TagCate/TagCate';
 import {
     getDiscussCount, getHashList, HashListItem, parseFormData, parseUrl, translateMd
 } from '~/utils';
-import { db } from '~/utils/db.server';
 
 import { CalendarOutlined } from '@ant-design/icons';
-import { Category, Comment, Post, Reply, Tag, User } from '@prisma/client';
 
-import { PostListItem } from '../api/posts';
+import { api_get_post_by_id, PostListItem } from '../api/posts';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const data = await db.post.findUnique({
-    where: { id: params.postId },
-    include: {
-      tag: true,
-      cate: true,
-      comment: {
-        include: {
-          reply: {
-            include: { user: true },
-            orderBy: { createdAt: 'asc' },
-          },
-          user: true,
-        },
-        orderBy: { createdAt: 'desc' },
-      },
-    },
-  });
+  const data = await api_get_post_by_id(params.postId || '');
   if (data) {
     data.content = translateMd(data.content);
   }
@@ -59,7 +42,7 @@ const PostPage: React.FC = (props) => {
 
   const renderHashLink = (hashList: HashListItem[]) => {
     return hashList.map((h) => (
-      <Anchor.Link key={h.href} href={h.href} title={h.title}>
+      <Anchor.Link key={h.href} href={h.href} title={h.title} className='anchor'>
         {h.children?.length > 0 && renderHashLink(h.children)}
       </Anchor.Link>
     ));
@@ -68,11 +51,11 @@ const PostPage: React.FC = (props) => {
   return (
     <div className='pb-20px flex'>
       <div className='flex-1 pr-20px'>
-        <div className='text-center mb-20px pb-20px ' style={{ borderBottom: '1px solid #e8e8e8' }}>
+        <div className='text-center mb-20px pb-20px' style={{ borderBottom: '1px solid #e8e8e8' }}>
           <h1 className='color-#0d1a26 text-1.7em'>{data.title}</h1>
 
           <div>
-            <CalendarOutlined /> &nbsp; Posted on &nbsp;<span>{'2022-02-01'}</span>
+            <CalendarOutlined /> &nbsp; Posted on &nbsp;<span>{dayjs(data.createdAt).format('YYYY-MM-DD')}</span>
             <TagCate tag={data.tag} cate={data.cate} />
             <Divider type='vertical' />
             <span>

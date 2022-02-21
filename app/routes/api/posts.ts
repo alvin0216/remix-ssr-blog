@@ -13,16 +13,17 @@ export type PostListItem = Post & {
 
 export const action: ActionFunction = async ({ request }) => {
   const query = await parseFormData(request);
-  return getPostList(query);
+  return api_get_posts(query);
 };
 
-export async function getPostList(query: any): Promise<Page<PostListItem>> {
+export async function api_get_posts(query: any): Promise<Page<PostListItem>> {
   const pageSize = query.pageSize || 10;
   const current = query.current || 1;
 
-  const where = query.k
+  const keyword = query.k ? String(query.k) : undefined;
+  const where = keyword
     ? {
-        OR: [{ title: { contains: query.k } }, { content: query.k }],
+        OR: [{ title: { contains: keyword } }, { content: keyword }],
       }
     : undefined;
 
@@ -44,4 +45,24 @@ export async function getPostList(query: any): Promise<Page<PostListItem>> {
   const total = await db.post.count({ where });
 
   return { results, total, current, pageSize } as Page<PostListItem>;
+}
+
+export async function api_get_post_by_id(postId: string) {
+  return db.post.findUnique({
+    where: { id: postId },
+    include: {
+      tag: true,
+      cate: true,
+      comment: {
+        include: {
+          reply: {
+            include: { user: true },
+            orderBy: { createdAt: 'asc' },
+          },
+          user: true,
+        },
+        orderBy: { createdAt: 'desc' },
+      },
+    },
+  });
 }

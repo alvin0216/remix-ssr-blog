@@ -7,11 +7,11 @@ import {
 import TagCate from '~/components/TagCate/TagCate';
 import { getDiscussCount, parseUrl, queryToUrl, translateMd } from '~/utils';
 
-import { getPostList, PostListItem } from './api/posts';
+import { api_get_posts, PostListItem } from './api/posts';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const query = parseUrl(request.url);
-  const data = await getPostList(query);
+  const data = await api_get_posts(query);
 
   data.results.forEach((item) => {
     item.content = translateMd(item.content.slice(0, 500));
@@ -59,8 +59,8 @@ export default function IndexPage() {
           />
         </div>
       ) : (
-        <div className='xl:pr-275px w-full'>
-          <ul className='pb-40px'>
+        <>
+          <ul className='w-full xl:pr-292px'>
             {data.results.map((item) => {
               const count = getDiscussCount(item.comment);
               return (
@@ -112,8 +112,19 @@ export default function IndexPage() {
             />
           </ul>
 
-          {/* list */}
-        </div>
+          <div className='fixed top-90px right-20px w-260px'>
+            <Divider>文章列表</Divider>
+            <ul>
+              {data.results.map((r) => (
+                <li key={r.id} className='hover:bg-#f0f2f5'>
+                  <Link to={`/posts/${r.id}`} className='block text-#8590a6 truncate' title={r.title}>
+                    {r.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       )}
     </div>
   );
