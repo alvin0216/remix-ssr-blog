@@ -7,7 +7,7 @@ import { useFetcher, useTransition } from 'remix';
 import { DiscussListItem } from '~/export.types';
 import useRemixFetcherSubmit from '~/hooks/useRemixFetcherSubmit';
 import useSetState from '~/hooks/useSetState';
-import { translateMd } from '~/utils';
+import { getDiscussCount, translateMd } from '~/utils';
 
 import {
     DeleteOutlined, GithubOutlined, InfoCircleOutlined, UserOutlined
@@ -31,7 +31,6 @@ interface DiscussProps {
   comment: DiscussListItem[];
   context: GlobalContext;
   postId: string;
-  count?: number;
 }
 
 /** 需要在引入的地方导入 action */
@@ -40,6 +39,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
 
   const context = props.context;
   const transition = useTransition();
+  const count = getDiscussCount(props.comment);
 
   const [state, setState] = useSetState({
     comment: '',
@@ -100,7 +100,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
     <>
       <div className='text-16px'>
         <span className='text-#6190e8 mr-5px' style={{ borderBottom: '1px dotted #6190e8' }}>
-          {props.count || 0}
+          {count}
         </span>
         条评论
       </div>
