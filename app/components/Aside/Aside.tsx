@@ -37,18 +37,18 @@ const Aside: React.FC<{ context: GlobalContext }> = (props) => {
       </ul>
 
       <Divider orientation='left'>标签</Divider>
-      <Space>
+      <div>
         {context.tagList.map((t, i) => (
           <Tag key={t.name} color={context.tagColor[t.name]}>
             <Link to={`/tags/?tag=${t.name}`}>{t.name}</Link>
           </Tag>
         ))}
-      </Space>
+      </div>
 
       {config.friendLinks && (
         <>
           <Divider orientation='left'>友链</Divider>
-          <Space>
+          <Space wrap>
             {config.friendLinks.map((item, index) => {
               if (index % 2 !== 0) return null;
               const next = config.friendLinks[index + 1];

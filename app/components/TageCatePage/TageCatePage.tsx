@@ -35,7 +35,7 @@ const TageCatePage: React.FC<TageCatePageProps> = (props) => {
   return (
     <div>
       <div className='max-w-860px pt-5 m-auto'>
-        <Space className='w-full justify-center'>
+        <Space className='w-full justify-center' wrap>
           {cList.map((c, cIndex) => {
             let to =
               cIndex === 0
