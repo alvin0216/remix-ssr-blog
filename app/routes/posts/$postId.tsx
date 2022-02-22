@@ -2,7 +2,7 @@ import { Anchor, Divider } from 'antd';
 import dayjs from 'dayjs';
 import { ActionFunction, LoaderFunction, useLoaderData, useOutletContext } from 'remix';
 import { api_add_comment, api_add_reply, api_remove_comment, api_remove_reply } from '~/api.server';
-import Discuss, { DiscussListItem } from '~/components/Discuss/Discuss';
+import Discuss from '~/components/Discuss/Discuss';
 import TagCate from '~/components/TagCate/TagCate';
 import { PostListItem } from '~/export.types';
 import {
@@ -38,8 +38,8 @@ interface LoaderData {
 
 const PostPage: React.FC = (props) => {
   const { data, postId, hashList } = useLoaderData<LoaderData>();
-  const count = getDiscussCount(data.comment);
   const context = useOutletContext<GlobalContext>();
+  const count = getDiscussCount(data.comment);
 
   const renderHashLink = (hashList: HashListItem[]) => {
     return hashList.map((h) => (
@@ -57,7 +57,7 @@ const PostPage: React.FC = (props) => {
 
           <div>
             <CalendarOutlined /> &nbsp; Posted on &nbsp;<span>{dayjs(data.createdAt).format('YYYY-MM-DD')}</span>
-            <TagCate tag={data.tag} cate={data.cate} />
+            <TagCate tag={data.tag} cate={data.cate} tagColor={context.tagColor} />
             <Divider type='vertical' />
             <span>
               <img className='wh-14 mr-4px' src='https://gitee.com/alvin0216/cdn/raw/master/images/comment.png' />

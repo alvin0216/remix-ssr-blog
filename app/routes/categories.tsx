@@ -1,7 +1,7 @@
 import { Badge, Pagination, Space, Tag, Timeline } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { Link, Links, LoaderFunction, useLoaderData, useNavigate } from 'remix';
+import { Link, Links, LoaderFunction, useLoaderData, useNavigate, useOutletContext } from 'remix';
 import TagCate from '~/components/TagCate/TagCate';
 import { CateListItem, PostListItem } from '~/export.types';
 import { colorList, groupBy, parseUrl, queryToUrl } from '~/utils';
@@ -14,7 +14,7 @@ import { api_get_posts } from './api/posts';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const query = parseUrl(request.url);
-  const cateList = await api_get_cates(query);
+  const cateList = await api_get_cates();
   const data = await api_get_posts({ ...query });
   const total = await db.post.count();
 
@@ -30,6 +30,8 @@ interface LoaderData {
 
 export default function CatePage() {
   const naviagate = useNavigate();
+  const context = useOutletContext<GlobalContext>();
+
   const { cateList, query, total, data } = useLoaderData<LoaderData>();
   const [viewWidth, setViewWidth] = useState(1440);
   const cList = [{ _count: 0, name: '全部' }, ...cateList];
@@ -68,7 +70,7 @@ export default function CatePage() {
               </Link>
               <CalendarOutlined />
               &nbsp;<span>{dayjs(item.createdAt).format('YYYY-MM-DD')}</span>
-              <TagCate tag={item.tag} cate={item.cate} />
+              <TagCate tag={item.tag} cate={item.cate} tagColor={context.tagColor} />
             </li>
           ))}
         </ul>

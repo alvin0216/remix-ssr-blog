@@ -1,7 +1,7 @@
 import hljs from 'highlight.js';
 import { marked } from 'marked';
 import xss from 'xss';
-import { DiscussListItem } from '~/components/Discuss/Discuss';
+import { DiscussListItem } from '~/export.types';
 
 /** 解析 url query，会默认转化为 number 类型 */
 export function parseUrl<T = any>(url: string): T {
@@ -65,7 +65,10 @@ export async function parseFormData<T = any>(request: Request) {
 
   if (fields) {
     Object.entries(fields).forEach(([key, value]) => {
-      result[key] = value ? (value as any)?.[0] : value;
+      const v = value ? (value as any)?.[0] : value;
+      if (v !== 'undefined') {
+        result[key] = v;
+      }
     });
   }
 
@@ -139,4 +142,18 @@ export const colorList = [
   '#F57E4C',
   '#67cd85',
   '#e15b64',
+];
+
+export const tagColorList = [
+  'magenta',
+  'blue',
+  'red',
+  'volcano',
+  'orange',
+  'gold',
+  'lime',
+  'green',
+  'cyan',
+  'geekblue',
+  'purple',
 ];

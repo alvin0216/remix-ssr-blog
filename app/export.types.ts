@@ -1,4 +1,4 @@
-import { Category, Post, Reply, Tag, User } from '@prisma/client';
+import { Category, Comment, Post, Reply, Tag, User } from '@prisma/client';
 
 export interface AddCommentParams {
   redirectUrl: string;

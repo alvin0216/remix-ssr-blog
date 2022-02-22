@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useMemo, useRef, useState } from 'react';
 import { useTransition } from 'remix';
+import { DiscussListItem } from '~/export.types';
 import useRemixFormSubmit from '~/hooks/useRemixFormSubmit';
 import useSetState from '~/hooks/useSetState';
 import { translateMd } from '~/utils';
@@ -14,11 +15,6 @@ import {
 import { Category, Comment, Post, Reply, Tag, User } from '@prisma/client';
 
 dayjs.extend(relativeTime);
-
-export type DiscussListItem = Comment & {
-  reply: (Reply & { user: User })[];
-  user: User;
-};
 
 interface UserDataMap {
   // userId

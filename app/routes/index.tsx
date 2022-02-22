@@ -28,10 +28,10 @@ interface LoaderData {
 
 export default function IndexPage() {
   const { data, query } = useLoaderData<LoaderData>();
+  const context = useOutletContext<GlobalContext>();
   const naviagate = useNavigate();
   const [viewWidth, setViewWidth] = useState(1440);
   // result
-  const context = useOutletContext<GlobalContext>();
 
   const handlePageChange = (current: number, pageSize: number) => {
     naviagate(queryToUrl({ ...query, current, pageSize }));
@@ -98,7 +98,7 @@ export default function IndexPage() {
                       <span>{item.view}</span>
                     </span>
 
-                    <TagCate tag={item.tag} cate={item.cate} />
+                    <TagCate tag={item.tag} cate={item.cate} tagColor={context.tagColor} />
                   </div>
                 </li>
               );

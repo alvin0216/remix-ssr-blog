@@ -1,5 +1,4 @@
 import { ActionFunction, createCookie, redirect } from 'remix';
-import { DiscussListItem } from '~/components/Discuss/Discuss';
 import { parseFormData } from '~/utils';
 import { db } from '~/utils/db.server';
 
@@ -13,8 +12,8 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export async function api_get_posts(query: any): Promise<Page<PostListItem>> {
-  const pageSize = query.pageSize || 10;
-  const current = query.current || 1;
+  const pageSize = Number(query.pageSize || 10);
+  const current = Number(query.current || 1);
 
   const where = {
     OR: query.k ? [{ title: { contains: String(query.k) } }, { content: String(query.k) }] : undefined,

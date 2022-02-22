@@ -12,6 +12,7 @@
 .m-auto{margin:auto;}
 .\!my-0{margin-top:0rem !important;margin-bottom:0rem !important;}
 .my-24px{margin-top:24px;margin-bottom:24px;}
+.\!mb-24px{margin-bottom:24px !important;}
 .mb-0{margin-bottom:0rem;}
 .mb-10px{margin-bottom:10px;}
 .mb-20px{margin-bottom:20px;}
@@ -27,8 +28,10 @@
 .mt-22px{margin-top:22px;}
 .mt-5px{margin-top:5px;}
 .mt-8px{margin-top:8px;}
+.inline{display:inline;}
 .block{display:block;}
 .inline-block{display:inline-block;}
+.\!w-180px{width:180px !important;}
 .h-132px{height:132px;}
 .h-16{height:4rem;}
 .h-160px{height:160px;}

@@ -1,10 +1,8 @@
-import { Avatar, Dropdown, Menu, Modal } from 'antd';
-import useModal from '~/hooks/useModal';
+import { Avatar, Dropdown, Menu } from 'antd';
+import { useNavigate } from 'remix';
 import useRemixFormSubmit from '~/hooks/useRemixFormSubmit';
 
-import { GithubOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
-
-import Manager from '../Manager/Manager';
+import { AppstoreOutlined, GithubOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 
 interface AvatarActionProps {
   context: GlobalContext;
@@ -12,9 +10,8 @@ interface AvatarActionProps {
 
 const AvatarAction: React.FC<AvatarActionProps> = (props) => {
   const submit = useRemixFormSubmit();
+  const naviagate = useNavigate();
   const context = props.context;
-
-  const { modalProps, show } = useModal();
 
   const menu = (
     <Menu
@@ -22,11 +19,11 @@ const AvatarAction: React.FC<AvatarActionProps> = (props) => {
         // 在 root action 被执行
         if (e.key === 'loginout') submit(undefined, { actionType: 'loginout' });
         else if (e.key === 'login') submit('/auth/github');
-        else if (e.key === 'manager') show();
+        else if (e.key === 'admin') naviagate('/admin');
       }}>
       {context.isMaster && (
-        <Menu.Item key='manager'>
-          <GithubOutlined className='mr-8px' />
+        <Menu.Item key='admin'>
+          <AppstoreOutlined className='mr-8px' />
           文章管理
         </Menu.Item>
       )}
@@ -51,9 +48,6 @@ const AvatarAction: React.FC<AvatarActionProps> = (props) => {
       <Dropdown overlay={menu}>
         <Avatar icon={<UserOutlined />} src={context.loginInfo?.avatar_url} />
       </Dropdown>
-      <Modal {...modalProps} title='文章管理' footer={false} width={850}>
-        <Manager />
-      </Modal>
     </div>
   );
 };

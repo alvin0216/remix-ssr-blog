@@ -36,6 +36,8 @@ declare interface GithubInfo {
 declare interface GlobalContext {
   loginInfo?: GithubInfo;
   isMaster: boolean;
+  tagList: { name: string; _count: number }[];
+  tagColor: { [key: string]: string };
 }
 
 declare interface Page<T> {

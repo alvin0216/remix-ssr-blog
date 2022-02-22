@@ -5,25 +5,10 @@ import { Link } from 'remix';
 import { FolderOutlined } from '@ant-design/icons';
 import { Category, Tag } from '@prisma/client';
 
-import TagIcon from './tags.svg';
-
-const colorList = [
-  'magenta',
-  'blue',
-  'red',
-  'volcano',
-  'orange',
-  'gold',
-  'lime',
-  'green',
-  'cyan',
-  'geekblue',
-  'purple',
-];
-
 interface TagCateProps {
   tag: Tag[];
   cate: Category[];
+  tagColor: { [key: string]: string };
 }
 
 const TagCate: React.FC<TagCateProps> = (props) => {
@@ -35,7 +20,7 @@ const TagCate: React.FC<TagCateProps> = (props) => {
           <img className='wh-14 mr-7px' src='https://gitee.com/alvin0216/cdn/raw/master/images/tag.png' />
 
           {props.tag.map((t, i) => (
-            <TagCom key={t.id} color={colorList[i]}>
+            <TagCom key={t.id} color={props.tagColor[t.name]}>
               <Link to={`/tags/${t.name}`}>{t.name}</Link>
             </TagCom>
           ))}
