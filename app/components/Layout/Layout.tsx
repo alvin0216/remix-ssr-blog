@@ -17,7 +17,7 @@ const BLayout: React.FC<BLayoutProps> = (props) => {
       <BHeader context={props.context} />
       <Row className='pt-40px relative'>
         <Col {...siderLayout}>
-          <Aside />
+          <Aside context={props.context} />
         </Col>
         <Col
           {...contentLayout}

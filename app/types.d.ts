@@ -46,3 +46,8 @@ declare interface Page<T> {
   current: number;
   pageSize: number;
 }
+
+declare interface CateListItem {
+  name: string;
+  _count: number;
+}

@@ -2,13 +2,18 @@ import { ActionFunction, createCookie, redirect } from 'remix';
 import { parseFormData } from '~/utils';
 import { db } from '~/utils/db.server';
 
-import { Category, Post, Tag } from '@prisma/client';
-
 import type { PostListItem } from '~/export.types';
 
 export const action: ActionFunction = async ({ request }) => {
   const query = await parseFormData(request);
-  return api_get_posts(query);
+  const actionType = query.actionType;
+
+  console.log('query', query);
+
+  if (actionType === 'api_get_posts') return api_get_posts(query);
+  else if (actionType === 'api_delete_post') await api_delete_post(query.postId);
+
+  return redirect(query.redirectUrl || request.url);
 };
 
 export async function api_get_posts(query: any): Promise<Page<PostListItem>> {
@@ -50,7 +55,7 @@ export async function api_get_posts(query: any): Promise<Page<PostListItem>> {
 }
 
 export async function api_get_post_by_id(postId: string) {
-  return db.post.findUnique({
+  const data = await db.post.findUnique({
     where: { id: postId },
     include: {
       tag: true,
@@ -67,4 +72,18 @@ export async function api_get_post_by_id(postId: string) {
       },
     },
   });
+
+  await db.post.update({
+    where: { id: postId },
+    data: { view: (data?.view || 0) + 1 },
+  });
+
+  return data;
+}
+
+export async function api_delete_post(postId: string) {
+  await db.tag.deleteMany({ where: { postId } });
+  await db.category.deleteMany({ where: { postId } });
+  await db.comment.deleteMany({ where: { postId } });
+  await db.post.delete({ where: { id: postId } });
 }

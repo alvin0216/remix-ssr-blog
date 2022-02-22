@@ -21,7 +21,7 @@ const TagCate: React.FC<TagCateProps> = (props) => {
 
           {props.tag.map((t, i) => (
             <TagCom key={t.id} color={props.tagColor[t.name]}>
-              <Link to={`/tags/${t.name}`}>{t.name}</Link>
+              <Link to={`/tags/?tag=${t.name}`}>{t.name}</Link>
             </TagCom>
           ))}
         </>

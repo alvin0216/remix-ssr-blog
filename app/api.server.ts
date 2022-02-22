@@ -24,9 +24,9 @@ export const api_remove_comment = async (
   }
 ) => {
   await getUserProfile(request); // check auth
-  await db.reply.deleteMany({
-    where: { commentId: form.commentId },
-  });
+  // await db.reply.deleteMany({
+  //   where: { commentId: form.commentId },
+  // });
 
   await db.comment.delete({ where: { id: form.commentId } });
   return redirect(form.redirectUrl || request.url);

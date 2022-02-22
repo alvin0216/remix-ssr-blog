@@ -1,4 +1,4 @@
-import { Alert, Button, Divider, Popover, Space } from 'antd';
+import { Alert, Button, Divider, Popover, Space, Tag } from 'antd';
 import { Link } from 'remix';
 import config from '~/config.json';
 
@@ -11,7 +11,9 @@ interface Social {
   };
 }
 
-const Aside: React.FC = (props) => {
+const Aside: React.FC<{ context: GlobalContext }> = (props) => {
+  const context = props.context;
+
   return (
     <aside
       className='border-0 border-r-1 border-solid border-#ebedf0 text-center overflow-y-auto text-rgba(0, 0, 0, 0.65)'
@@ -33,6 +35,15 @@ const Aside: React.FC = (props) => {
           );
         })}
       </ul>
+
+      <Divider orientation='left'>标签</Divider>
+      <Space>
+        {context.tagList.map((t, i) => (
+          <Tag key={t.name} color={context.tagColor[t.name]}>
+            <Link to={`/tags/?tag=${t.name}`}>{t.name}</Link>
+          </Tag>
+        ))}
+      </Space>
 
       <Divider />
 

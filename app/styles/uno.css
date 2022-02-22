@@ -126,6 +126,7 @@
 .text-\#c2c2c2{--un-text-opacity:1;color:rgba(194,194,194,var(--un-text-opacity));}
 .text-\#f00{--un-text-opacity:1;color:rgba(255,0,0,var(--un-text-opacity));}
 .text-red{--un-text-opacity:1;color:rgba(248,113,113,var(--un-text-opacity));}
+.tab{-moz-tab-size:4;-o-tab-size:4;tab-size:4;}
 .transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms;}
 .wh-14{width:14px;height:14px;}
 @media (prefers-reduced-motion: no-preference){

@@ -75,7 +75,7 @@ model Reply {
   user         User     @relation(fields: [userId], references: [id])
   userId       String
 
-  comment      Comment  @relation(fields: [commentId], references: [id])
+  comment      Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   commentId    String
 
   // 评论回复评论

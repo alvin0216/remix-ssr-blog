@@ -8,22 +8,20 @@ import { api_get_posts } from './api/posts';
 
 export const loader: LoaderFunction = async ({ request }) => {
   const query = parseUrl(request.url);
-  const cateList = await api_get_cates();
   const data = await api_get_posts({ ...query });
 
-  return { cateList, query, data };
+  return { query, data };
 };
 
 interface LoaderData {
-  cateList: CateListItem[];
   data: Page<PostListItem>;
   query: any;
 }
 
-export default function CatePage() {
+export default function TagPage() {
   const context = useOutletContext<GlobalContext>();
 
   const loaderData = useLoaderData<LoaderData>();
 
-  return <TageCatePage type='cate' context={context} {...loaderData} />;
+  return <TageCatePage type='tag' context={context} {...loaderData} cateList={context.tagList} />;
 }

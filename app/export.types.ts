@@ -23,8 +23,3 @@ export type PostListItem = Post & {
   cate: Category[];
   comment: DiscussListItem[];
 };
-
-export interface CateListItem {
-  name: string;
-  _count: number;
-}
