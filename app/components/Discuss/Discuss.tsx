@@ -3,9 +3,9 @@ import CommentCom from 'antd/lib/comment';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useMemo, useRef, useState } from 'react';
-import { useTransition } from 'remix';
+import { useFetcher, useTransition } from 'remix';
 import { DiscussListItem } from '~/export.types';
-import useRemixFormSubmit from '~/hooks/useRemixFormSubmit';
+import useRemixFetcherSubmit from '~/hooks/useRemixFetcherSubmit';
 import useSetState from '~/hooks/useSetState';
 import { translateMd } from '~/utils';
 
@@ -36,7 +36,8 @@ interface DiscussProps {
 
 /** 需要在引入的地方导入 action */
 const Discuss: React.FC<DiscussProps> = (props) => {
-  const submit = useRemixFormSubmit();
+  const { submit, fetcher } = useRemixFetcherSubmit();
+
   const context = props.context;
   const transition = useTransition();
 
@@ -74,7 +75,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
 
   const addComment = async () => {
     if (state.comment.trim()) {
-      submit(undefined, {
+      submit('/api/discuss', {
         actionType: 'api_add_comment',
         postId: props.postId,
         comment: state.comment.trim(),
@@ -84,7 +85,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
 
   const addReply = async (commentId: string) => {
     if (state.reply) {
-      submit(undefined, {
+      submit('/api/discuss', {
         actionType: 'api_add_reply',
         postId: props.postId,
         replyId: state.replyId,
@@ -160,7 +161,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
                       title='是否删除该留言？'
                       cancelText='取消'
                       okText='确认'
-                      onConfirm={() => submit(undefined, { actionType: 'api_remove_comment', commentId: c.id })}>
+                      onConfirm={() => submit('/api/discuss', { actionType: 'api_remove_comment', commentId: c.id })}>
                       <div className='delete-icon text-#f00'>
                         <DeleteOutlined className='cursor-pointer' style={{ verticalAlign: 'middle' }} />
                       </div>
@@ -204,7 +205,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
                             title='是否删除该回复？'
                             cancelText='取消'
                             okText='确认'
-                            onConfirm={() => submit(undefined, { actionType: 'api_remove_reply', replyId: r.id })}>
+                            onConfirm={() => submit('/api/discuss', { actionType: 'api_remove_reply', replyId: r.id })}>
                             <div className='delete-icon text-#f00'>
                               <DeleteOutlined className='cursor-pointer' style={{ verticalAlign: 'middle' }} />
                             </div>

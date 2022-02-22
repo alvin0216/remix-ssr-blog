@@ -21,15 +21,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return { data, postId: params.postId, hashList: data?.content ? getHashList(data.content) : [] };
 };
 
-export const action: ActionFunction = async ({ request }) => {
-  const form = await parseFormData<any>(request);
-  if (form.actionType === 'api_add_comment') return api_add_comment(request, form);
-  if (form.actionType === 'api_remove_comment') return api_remove_comment(request, form);
-  if (form.actionType === 'api_add_reply') return api_add_reply(request, form);
-  if (form.actionType === 'api_remove_reply') return api_remove_reply(request, form);
-  return null;
-};
-
 interface LoaderData {
   data: PostListItem;
   postId: string;

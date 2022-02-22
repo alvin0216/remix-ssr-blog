@@ -25,8 +25,16 @@ const list = fileList.map((file, idx) => {
   return { yml, title: yml.title || file, content: fileStr.slice(mdYmlStr.length + 8) };
 });
 
-Promise.all(
-  list.map(({ yml, title, content }) => {
+Promise.all([
+  db.post.create({
+    data: {
+      id: '1024',
+      title: 'discuss page',
+      content: '',
+    },
+  }),
+  ,
+  ...list.map(({ yml, title, content }) => {
     return db.post.create({
       data: {
         title,
@@ -47,8 +55,8 @@ Promise.all(
         },
       },
     });
-  })
-)
+  }),
+])
   .then(() => {
     console.log('Database has been seeded. 🌱');
   })

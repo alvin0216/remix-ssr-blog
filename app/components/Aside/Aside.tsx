@@ -45,9 +45,24 @@ const Aside: React.FC<{ context: GlobalContext }> = (props) => {
         ))}
       </Space>
 
-      <Divider />
+      {config.friendLinks && (
+        <>
+          <Divider orientation='left'>友链</Divider>
+          <Space>
+            {config.friendLinks.map((item, index) => {
+              if (index % 2 !== 0) return null;
+              const next = config.friendLinks[index + 1];
+              return (
+                <a key={index} href={next} target='_blank' rel='noreferrer noopener'>
+                  {item}
+                </a>
+              );
+            })}
+          </Space>
+        </>
+      )}
 
-      {/* <Alert message='Info Text' type='info' /> */}
+      <Divider />
 
       <Space>
         {config.donate && (

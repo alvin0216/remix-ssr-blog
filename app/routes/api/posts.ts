@@ -21,6 +21,7 @@ export async function api_get_posts(query: any): Promise<Page<PostListItem>> {
   const current = Number(query.current || 1);
 
   const where = {
+    id: { not: '1024' },
     OR: query.k ? [{ title: { contains: String(query.k) } }, { content: String(query.k) }] : undefined,
     tag: { every: { name: query.tag } },
     cate: { every: { name: query.cate } },
@@ -47,6 +48,7 @@ export async function api_get_posts(query: any): Promise<Page<PostListItem>> {
     skip: (current - 1) * pageSize,
     where,
     ...searchConfig,
+    orderBy: { createdAt: 'desc' },
   });
 
   const total = await db.post.count({ where });

@@ -29,7 +29,7 @@ export function links() {
 }
 
 export const meta: MetaFunction = () => {
-  return { title: 'New Remix App' };
+  return { title: config.blogName };
 };
 
 type LoaderData = { profile: GitHubProfile };
