@@ -25,8 +25,8 @@ const AboutPage: React.FC = (props) => {
       <ul>
         <li>1. 中英文语言切换</li>
         <li>2. 响应式</li>
-        <li>3. admin 管理页完善</li>
-        <li>4. github action 的 ci/cd 接入</li>
+        <li>3. admin 管理页完善 (一键导入导出功能)</li>
+        <li>4. github action 的 ci/cd 接入 ✅</li>
         <li>5. 留言消息的未读已读功能</li>
       </ul>
       <h3>简述</h3>

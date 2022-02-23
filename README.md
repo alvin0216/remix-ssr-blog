@@ -3,9 +3,10 @@
 技术框架
 
 1. [remix](https://github.com/remix-run/remix)
-2. [prisma](https://github.com/prisma/prisma)
+2. [react 17.0.2](https://github.com/facebook/react)
 3. [unocss](https://github.com/unocss/unocss)
-4. mysql
+4. [mysql](https://github.com/mysqljs/mysql)
+5. [prisma](https://github.com/prisma/prisma)
 
 ## 快速上手
 
@@ -42,9 +43,11 @@ Remix App Server started at http://localhost:3333。
 
 ## 性能体现
 
-![](https://user-images.githubusercontent.com/34113677/155189577-0650d10c-1253-4e91-b643-cbc49ed6ec2e.png)
+![](https://user-images.githubusercontent.com/34113677/155289161-67e5b721-345a-4c35-86ab-a7aa95dddd48.png)
 
-仍然在开发中..还有优化的空间～
+![](https://user-images.githubusercontent.com/34113677/155289175-ef19b26d-651c-49d5-af76-88518a8e5262.png)
+
+统计来源：https://remix.alvin.run，很轻量级，性能表现效果很好！
 
 ## 如果该项目对您有所帮助，不妨请作者喝杯奶茶
 
