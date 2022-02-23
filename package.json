@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "remix setup node",
     "start": "cross-env PORT=3333 remix-serve build",
-    "build": "remix build",
+    "build": "concurrently \"npm run seed:config\" \"remix build\"",
     "build:css": "unocss \"app/routes/**/*.tsx\"",
     "dev": "concurrently \"npm run seed:config\" \"npm run dev:css\" \"cross-env PORT=3333 remix dev\"",
     "dev:css": "unocss -o ./app/styles/uno.css \"app/**/*.tsx\" --watch",
