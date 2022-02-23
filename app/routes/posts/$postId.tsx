@@ -53,7 +53,7 @@ export default function PostPage() {
 
   return (
     <div className='pb-20px flex'>
-      <div className='flex-1 pr-20px'>
+      <div className='flex-1 pr-20px overflow-x-hidden'>
         <div className='text-center mb-20px pb-20px' style={{ borderBottom: '1px solid #e8e8e8' }}>
           <h1 className='color-#0d1a26 text-1.7em'>{data.title}</h1>
 
