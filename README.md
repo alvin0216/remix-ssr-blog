@@ -48,4 +48,10 @@ Remix App Server started at http://localhost:3333。
 
 ## 如果该项目对您有所帮助，不妨请作者喝杯奶茶
 
-<img src="public/alipay.png" width="430"> <img src="public/wechat.png" width="430">
+**微信**
+
+<img src="public/wechat.png" width="180">
+
+**支付宝**
+
+<img src="public/alipay.png" width="180">
