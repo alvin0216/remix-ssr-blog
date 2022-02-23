@@ -47,7 +47,7 @@ Remix App Server started at http://localhost:3333。
 
 ![](https://user-images.githubusercontent.com/34113677/155289175-ef19b26d-651c-49d5-af76-88518a8e5262.png)
 
-统计来源：https://remix.alvin.run，很轻量级，性能表现效果很好！
+统计来源：[https://remix.alvin.run](https://remix.alvin.run)。
 
 ## 如果该项目对您有所帮助，不妨请作者喝杯奶茶
 
