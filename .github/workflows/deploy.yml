@@ -20,4 +20,5 @@ jobs:
             cd /code/remix-ssr-blog
             git pull
             yarn
+            yarn build
             pm2 restart npm
