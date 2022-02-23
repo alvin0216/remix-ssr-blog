@@ -5,7 +5,7 @@ import useRemixFormSubmit from '~/hooks/useRemixFormSubmit';
 import { AppstoreOutlined, GithubOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 
 interface AvatarActionProps {
-  context: GlobalContext;
+  context?: GlobalContext;
 }
 
 const AvatarAction: React.FC<AvatarActionProps> = (props) => {
@@ -21,20 +21,20 @@ const AvatarAction: React.FC<AvatarActionProps> = (props) => {
         else if (e.key === 'login') submit('/auth/github');
         else if (e.key === 'admin') naviagate('/admin');
       }}>
-      {context.isMaster && (
+      {context?.isMaster && (
         <Menu.Item key='admin'>
           <AppstoreOutlined className='mr-8px' />
           文章管理
         </Menu.Item>
       )}
 
-      {!context.loginInfo && (
+      {!context?.loginInfo && (
         <Menu.Item key='login'>
           <GithubOutlined className='mr-8px' />
           github login
         </Menu.Item>
       )}
-      {context.loginInfo && (
+      {context?.loginInfo && (
         <Menu.Item key='loginout'>
           <LogoutOutlined className='mr-8px' />
           退出登录
@@ -46,7 +46,7 @@ const AvatarAction: React.FC<AvatarActionProps> = (props) => {
   return (
     <div className='lh-64px px-12px'>
       <Dropdown overlay={menu}>
-        <Avatar icon={<UserOutlined />} src={context.loginInfo?.avatar_url} />
+        <Avatar icon={<UserOutlined />} src={context?.loginInfo?.avatar_url} />
       </Dropdown>
     </div>
   );

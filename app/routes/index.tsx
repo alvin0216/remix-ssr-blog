@@ -86,12 +86,14 @@ export default function IndexPage() {
                     <span>
                       <img
                         className='wh-14 mr-4px'
+                        alt='comment'
                         src='https://gitee.com/alvin0216/cdn/raw/master/images/comment.png'
                       />
                       {count}
                     </span>
                     <span className='ml-8px'>
                       <img
+                        alt='viewCount'
                         className='wh-14 mr-4px -translate-y-1px'
                         src='https://gitee.com/alvin0216/cdn/raw/master/images/view.png'
                       />

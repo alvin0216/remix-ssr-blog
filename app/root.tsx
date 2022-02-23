@@ -1,22 +1,20 @@
-import { Spin } from 'antd';
+import { Button, Result, Spin } from 'antd';
 import antdStyles from 'antd/dist/antd.css';
 import { useEffect } from 'react';
 import {
-    ActionFunction, Form, json, Links, LiveReload, Meta, Outlet, redirect, Scripts,
+    ActionFunction, Form, json, Link, Links, LiveReload, Meta, Outlet, redirect, Scripts,
     ScrollRestoration, useLoaderData, useLocation, useTransition
 } from 'remix';
 import { auth, sessionStorage } from '~/auth.server';
 import config from '~/config.json';
 
 import Layout from './components/Layout/Layout';
-import useMount from './hooks/useMount';
 import { api_get_tags } from './routes/api/cate';
 import globalStyles from './styles/global.css';
 import mdStyles from './styles/md.css';
 import unoStyles from './styles/uno.css';
 import { parseFormData, tagColorList } from './utils';
 
-import type { GitHubProfile } from 'remix-auth-github';
 import type { LoaderFunction } from 'remix';
 import type { MetaFunction } from 'remix';
 export function links() {
@@ -28,11 +26,18 @@ export function links() {
   ];
 }
 
-export const meta: MetaFunction = () => {
-  return { title: config.blogName };
+export const meta: MetaFunction = ({ location, parentsData }) => {
+  const title = config?.seo?.title || config.blogName;
+  const description = config?.seo?.description;
+  return {
+    ...config.seo,
+    title,
+    'og:title': title,
+    'twitter:title': title,
+    description,
+    'og:description': description,
+  };
 };
-
-type LoaderData = { profile: GitHubProfile };
 
 export const loader: LoaderFunction = async ({ request }): Promise<GlobalContext> => {
   const data = await auth.isAuthenticated(request);
@@ -75,6 +80,36 @@ export default function App() {
           <Spin tip='Loading...' spinning={transition.state === 'loading'}>
             <Outlet context={context} />
           </Spin>
+        </Layout>
+
+        <ScrollRestoration />
+        <Scripts />
+        {process.env.NODE_ENV === 'development' && <LiveReload />}
+      </body>
+    </html>
+  );
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <html lang='en'>
+      <head>
+        <meta charSet='utf-8' />
+        <meta name='viewport' content='width=device-width,initial-scale=1' />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Layout>
+          <Result
+            status='warning'
+            title='There are some problems with your operation.'
+            extra={
+              <Link to='/'>
+                <Button type='primary'>Back Home</Button>
+              </Link>
+            }
+          />
         </Layout>
 
         <ScrollRestoration />

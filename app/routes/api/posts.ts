@@ -75,10 +75,12 @@ export async function api_get_post_by_id(postId: string) {
     },
   });
 
-  await db.post.update({
-    where: { id: postId },
-    data: { view: (data?.view || 0) + 1 },
-  });
+  if (data) {
+    await db.post.update({
+      where: { id: postId },
+      data: { view: (data?.view || 0) + 1 },
+    });
+  }
 
   return data;
 }

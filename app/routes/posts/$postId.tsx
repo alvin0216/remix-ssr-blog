@@ -1,9 +1,11 @@
 import { Anchor, Divider } from 'antd';
 import dayjs from 'dayjs';
-import { ActionFunction, LoaderFunction, useLoaderData, useOutletContext } from 'remix';
-import { api_add_comment, api_add_reply, api_remove_comment, api_remove_reply } from '~/api.server';
+import {
+    ActionFunction, LoaderFunction, MetaFunction, redirect, useLoaderData, useOutletContext
+} from 'remix';
 import Discuss from '~/components/Discuss/Discuss';
 import TagCate from '~/components/TagCate/TagCate';
+import config from '~/config.json';
 import { PostListItem } from '~/export.types';
 import {
     getDiscussCount, getHashList, HashListItem, parseFormData, parseUrl, translateMd
@@ -11,14 +13,23 @@ import {
 
 import { CalendarOutlined } from '@ant-design/icons';
 
+import NotFoundPage from '../404';
 import { api_get_post_by_id } from '../api/posts';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const data = await api_get_post_by_id(params.postId || '');
-  if (data) {
-    data.content = translateMd(data.content);
-  }
+  if (!data) throw Error('404');
+  data.content = translateMd(data.content);
   return { data, postId: params.postId, hashList: data?.content ? getHashList(data.content) : [] };
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  const loaderData = data as LoaderData;
+  const configKeyword = Array.isArray(config.seo.keywords) ? config.seo.keywords : [config.seo.keywords];
+  const keywords = [...configKeyword, loaderData.data.tag.map((t) => t.name).join(', ')].filter(Boolean);
+  const title = [data?.data?.title, config.seo?.title].filter(Boolean).join(' | ');
+
+  return { title, 'og:title': title, 'twitter:title': title, keywords };
 };
 
 interface LoaderData {
@@ -27,7 +38,7 @@ interface LoaderData {
   hashList: HashListItem[];
 }
 
-const PostPage: React.FC = (props) => {
+export default function PostPage() {
   const { data, postId, hashList } = useLoaderData<LoaderData>();
   const context = useOutletContext<GlobalContext>();
   const count = getDiscussCount(data.comment);
@@ -51,11 +62,16 @@ const PostPage: React.FC = (props) => {
             <TagCate tag={data.tag} cate={data.cate} tagColor={context.tagColor} />
             <Divider type='vertical' />
             <span>
-              <img className='wh-14 mr-4px' src='https://gitee.com/alvin0216/cdn/raw/master/images/comment.png' />
+              <img
+                alt='comment'
+                className='wh-14 mr-4px'
+                src='https://gitee.com/alvin0216/cdn/raw/master/images/comment.png'
+              />
               {count}
             </span>
             <span className='ml-8px'>
               <img
+                alt='viewCount'
                 className='wh-14 mr-4px -translate-y-1px'
                 src='https://gitee.com/alvin0216/cdn/raw/master/images/view.png'
               />
@@ -80,6 +96,9 @@ const PostPage: React.FC = (props) => {
       ,
     </div>
   );
-};
+}
 
-export default PostPage;
+export function ErrorBoundary({ error }: { error: Error }) {
+  // console.error(error);
+  return <NotFoundPage />;
+}

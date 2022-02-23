@@ -22,7 +22,7 @@ const navList = [
 ];
 
 interface BHeaderProps {
-  context: GlobalContext;
+  context?: GlobalContext;
 }
 
 const BHeader: React.FC<BHeaderProps> = (props) => {
@@ -42,8 +42,10 @@ const BHeader: React.FC<BHeaderProps> = (props) => {
       }}>
       <Row>
         <Col {...responsiveLeft} className='text-center lh-64px relative truncate'>
-          <img src={config.blogLogo} alt='logo' className='w-8 h-8' />
-          <span className='text-20px pl-10px'>{config.blogName}</span>
+          <Link to='/'>
+            <img src={config.blogLogo} alt='logo' className='w-8 h-8' />
+            <span className='text-20px pl-10px text-#555'>{config.blogName || config.seo?.title}</span>
+          </Link>
         </Col>
         <Col {...responsiveRight}>
           <div className='w-full flex '>

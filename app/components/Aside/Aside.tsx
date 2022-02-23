@@ -11,14 +11,14 @@ interface Social {
   };
 }
 
-const Aside: React.FC<{ context: GlobalContext }> = (props) => {
+const Aside: React.FC<{ context?: GlobalContext }> = (props) => {
   const context = props.context;
 
   return (
     <aside
       className='border-0 border-r-1 border-solid border-#ebedf0 text-center overflow-y-auto text-rgba(0, 0, 0, 0.65)'
       style={{ height: 'calc(100vh - 64px - 40px)' }}>
-      <img src={config.avatar} className='w-132px h-132px rounded-full' />
+      <img src={config.avatar} className='w-132px h-132px rounded-full' alt='avatar' />
       <h2 className='mt-10px mb-0 text-1.5em font-bold'>{config.asideName}</h2>
       <h5 className='mt-5px mb-5px text-13px'>{config.motto}</h5>
 
@@ -38,7 +38,7 @@ const Aside: React.FC<{ context: GlobalContext }> = (props) => {
 
       <Divider orientation='left'>标签</Divider>
       <div>
-        {context.tagList.map((t, i) => (
+        {context?.tagList.map((t, i) => (
           <Tag key={t.name} color={context.tagColor[t.name]}>
             <Link to={`/tags/?tag=${t.name}`}>{t.name}</Link>
           </Tag>
@@ -90,7 +90,7 @@ const Aside: React.FC<{ context: GlobalContext }> = (props) => {
                     {' '}
                     {Object.keys(config.donate || {}).map((key, idx) => (
                       <td key={idx} className='border-solid border-1px border-light-800'>
-                        <img src={config.donate[key]} className='w-160px h-160px' />
+                        <img alt='donate' src={config.donate[key]} className='w-160px h-160px' />
                       </td>
                     ))}
                   </tr>

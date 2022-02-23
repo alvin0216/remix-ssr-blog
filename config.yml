@@ -32,6 +32,19 @@ donate:
   AliPay: /alipay.png
   WeChat: /wechat.png
 
+# seo 相关
+seo:
+  # 标题 可以不填, 不填的话取 blogName
+  title: Alvin's blog
+  # 作者
+  author: alvin
+  # 用于告诉搜索引擎，你网页的关键字
+  keywords: alvin, remix, ssr, blog, react, frontend, 博客, Typescript
+  # 网站内容的描述
+  description: Personal blog developed based on remix, 基于 remix 开发的个人博客
+  # 可以不填
+  url: https://remix.alvin.run
+
 # 友链
 friendLinks:
   - Dan's blog
