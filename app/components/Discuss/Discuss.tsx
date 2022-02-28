@@ -14,13 +14,15 @@ import {
 } from '@ant-design/icons';
 import { Category, Comment, Post, Reply, Tag, User } from '@prisma/client';
 
+import DisscussAvatar from './DisscussAvatar';
+
 dayjs.extend(relativeTime);
 
 interface UserDataMap {
   // userId
   [key: string]: {
     username: string;
-    avatar: string;
+    github: GithubInfo;
   };
 }
 
@@ -57,7 +59,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
       if (!userMap[user.id]) {
         userMap[user.id] = {
           username: github.name || user.username,
-          avatar: github.avatar_url,
+          github,
         };
       }
     };
@@ -141,7 +143,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
               className='clear-both'
               key={c.id}
               author={cUser.username}
-              avatar={<Avatar src={cUser.avatar}>{cUser.username}</Avatar>}
+              avatar={<DisscussAvatar isMaster={context.isMaster} github={cUser.github} />}
               datetime={
                 <Tooltip title={dayjs(c.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
                   <span>{dayjs(c.createdAt).fromNow()}</span>
@@ -218,7 +220,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
                         {rUser.username} 回复 {userMap[replyUserMap[r.replyId]]?.username || cUser.username}
                       </span>
                     }
-                    avatar={<Avatar src={rUser.avatar}>{rUser.username}</Avatar>}
+                    avatar={<DisscussAvatar isMaster={context.isMaster} github={rUser.github} />}
                     datetime={
                       <Tooltip title={dayjs(r.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
                         <span>{dayjs(r.createdAt).fromNow()}</span>

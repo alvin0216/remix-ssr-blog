@@ -4,14 +4,14 @@ import { PrismaClient } from '@prisma/client';
 
 const db = new PrismaClient();
 
-axios.get('https://api.github.com/users/boliangleung').then((res) => {
+axios.get('https://api.github.com/users/alvin0216').then((res) => {
   // console.log(res.data);
 
   db.user
     .create({
       data: {
         id: res.data.id,
-        username: 'boliangleung',
+        username: 'alvin0216',
         github: JSON.stringify(res.data),
       },
     })

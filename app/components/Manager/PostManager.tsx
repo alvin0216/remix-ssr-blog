@@ -1,9 +1,10 @@
 import { Button, Form, Input, Popconfirm, Select, Space, Table, Tag, Upload } from 'antd';
 import dayjs from 'dayjs';
 import { useEffect, useRef } from 'react';
-import { useFetcher } from 'remix';
+import { Link, useFetcher } from 'remix';
 import { PostListItem } from '~/export.types';
 import useRemixFormSubmit from '~/hooks/useRemixFormSubmit';
+import { getDiscussCount } from '~/utils';
 
 import UploadModal, { UploadModalRef } from './UploadModal';
 
@@ -18,7 +19,7 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
   const fetcher = useFetcher<Page<PostListItem>>();
 
   const [form] = Form.useForm();
-  const uploadModalRef = useRef<UploadModalRef>();
+  const uploadModalRef = useRef<UploadModalRef>(null);
 
   const loadList = async (values?: any) => {
     console.log('query', values);
@@ -55,7 +56,7 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
             options={cateList.map((t) => ({ value: t.name, label: t.name }))}
           />
         </Form.Item>
-        <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+        <Form.Item>
           <Space>
             <Button
               onClick={() => {
@@ -92,7 +93,12 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
           showQuickJumper: true,
         }}
         columns={[
-          { dataIndex: 'title', title: '标题', ellipsis: true },
+          {
+            dataIndex: 'title',
+            title: '标题',
+            ellipsis: true,
+            render: (text, record) => <Link to={`/posts/${record.id}`}>{text}</Link>,
+          },
           {
             dataIndex: 'tag',
             title: '标签',
@@ -118,6 +124,12 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
                 ))}
               </Space>
             ),
+          },
+          {
+            dataIndex: 'comment',
+            title: '评论数',
+            render: (text, record) => getDiscussCount(record.comment),
+            sorter: (a, b) => getDiscussCount(a.comment) - getDiscussCount(b.comment),
           },
           { dataIndex: 'view', title: '浏览次数' },
           {
