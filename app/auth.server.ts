@@ -1,6 +1,7 @@
 import { createCookieSessionStorage } from 'remix';
 import { Authenticator } from 'remix-auth';
 import { GitHubStrategy } from 'remix-auth-github';
+import config from '~/config.json';
 
 import { db } from './utils/db.server';
 
@@ -43,20 +44,19 @@ auth.use(
     },
     async ({ profile, accessToken, extraParams }) => {
       if (profile) {
-        const user = await db.user.findUnique({ where: { id: profile.id } });
-        if (!user) {
-          db.user
-            .create({
-              data: {
-                username: profile.displayName,
-                github: JSON.stringify(profile._json),
-                id: profile.id,
-              },
-            })
-            .catch((e) => {
-              console.log('error', e);
-            });
-        }
+        // 更新或创建！
+        await db.user.upsert({
+          where: { id: profile._json.id },
+          update: {
+            username: profile.displayName,
+            github: JSON.stringify(profile._json),
+          },
+          create: {
+            username: profile.displayName,
+            github: JSON.stringify(profile._json),
+            id: profile._json.id,
+          },
+        });
       }
       return { profile, accessToken, extraParams };
     }
@@ -65,8 +65,16 @@ auth.use(
 
 export async function getUserProfile(request: Request) {
   const data = await auth.isAuthenticated(request);
+  return { user: data?.profile._json, isMaster: config.githubLoginName === data?.profile?._json.login };
+}
+
+/**
+ * 用户是否登录 返回用户资料
+ */
+export async function checkUserProfile(request: Request) {
+  const data = await auth.isAuthenticated(request);
   if (!data) {
     throw new Error('用户授权已失效！');
   }
-  return data.profile;
+  return { user: data?.profile._json, isMaster: config.githubLoginName === data?.profile?._json.login };
 }

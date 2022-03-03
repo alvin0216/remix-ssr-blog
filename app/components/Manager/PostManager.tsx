@@ -97,7 +97,11 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
             dataIndex: 'title',
             title: '标题',
             ellipsis: true,
-            render: (text, record) => <Link to={`/posts/${record.id}`}>{text}</Link>,
+            render: (text, record) => (
+              <Link className='text-#555' to={`/posts/${record.id}`}>
+                {text}
+              </Link>
+            ),
           },
           {
             dataIndex: 'tag',
@@ -140,7 +144,7 @@ const PostManager: React.FC<PostManagerProps> = (props) => {
           },
           {
             dataIndex: 'updatedAt',
-            title: '创建时间',
+            title: '更新时间',
             render: (text) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
             ellipsis: true,
           },

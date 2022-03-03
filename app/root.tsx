@@ -5,7 +5,7 @@ import {
     ActionFunction, Form, json, Link, Links, LiveReload, Meta, Outlet, redirect, Scripts,
     ScrollRestoration, useLoaderData, useLocation, useTransition
 } from 'remix';
-import { auth, sessionStorage } from '~/auth.server';
+import { auth, getUserProfile, sessionStorage } from '~/auth.server';
 import config from '~/config.json';
 
 import Layout from './components/Layout/Layout';
@@ -40,7 +40,7 @@ export const meta: MetaFunction = ({ location, parentsData }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }): Promise<GlobalContext> => {
-  const data = await auth.isAuthenticated(request);
+  const { user, isMaster } = await getUserProfile(request);
   const tagList = await api_get_tags();
 
   const tagColor = tagList.reduce((map, item, index) => {
@@ -49,8 +49,8 @@ export const loader: LoaderFunction = async ({ request }): Promise<GlobalContext
   }, {} as any);
 
   return {
-    loginInfo: data?.profile._json,
-    isMaster: config.githubLoginName === data?.profile?._json.login,
+    user,
+    isMaster,
     tagList,
     tagColor,
   };

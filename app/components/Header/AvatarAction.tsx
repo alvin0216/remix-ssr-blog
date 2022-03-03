@@ -28,13 +28,13 @@ const AvatarAction: React.FC<AvatarActionProps> = (props) => {
         </Menu.Item>
       )}
 
-      {!context?.loginInfo && (
+      {!context?.user && (
         <Menu.Item key='login'>
           <GithubOutlined className='mr-8px' />
           github login
         </Menu.Item>
       )}
-      {context?.loginInfo && (
+      {context?.user && (
         <Menu.Item key='loginout'>
           <LogoutOutlined className='mr-8px' />
           退出登录
@@ -46,7 +46,7 @@ const AvatarAction: React.FC<AvatarActionProps> = (props) => {
   return (
     <div className='lh-64px px-12px'>
       <Dropdown overlay={menu}>
-        <Avatar icon={<UserOutlined />} src={context?.loginInfo?.avatar_url} />
+        <Avatar icon={<UserOutlined />} src={context?.user?.avatar_url} />
       </Dropdown>
     </div>
   );

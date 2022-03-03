@@ -6,6 +6,7 @@ import {
 } from 'remix';
 import { auth } from '~/auth.server';
 import PostManager from '~/components/Manager/PostManager';
+import UserManager from '~/components/Manager/UserManager';
 import config from '~/config.json';
 import useRemixFormSubmit from '~/hooks/useRemixFormSubmit';
 
@@ -33,7 +34,7 @@ export default function AdminPage() {
         <PostManager context={context} cateList={cateList} />
       </Tabs.TabPane>
       <Tabs.TabPane tab='用户管理' key='2'>
-        To do
+        <UserManager />
       </Tabs.TabPane>
     </Tabs>
   );

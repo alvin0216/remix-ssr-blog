@@ -27,7 +27,7 @@ interface UserDataMap {
 }
 
 interface ReplyUserMap {
-  [key: string]: string;
+  [key: string]: number;
 }
 interface DiscussProps {
   comment: DiscussListItem[];
@@ -108,7 +108,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
       </div>
       <Divider style={{ marginBottom: 0, marginTop: 10 }} />
       <CommentCom
-        avatar={<Avatar icon={<UserOutlined />} src={context.loginInfo?.avatar_url} />}
+        avatar={<Avatar icon={<UserOutlined />} src={context.user?.avatar_url} />}
         content={
           <Input.TextArea
             rows={4}
@@ -121,7 +121,7 @@ const Discuss: React.FC<DiscussProps> = (props) => {
       <div className='mt-8px float-right color-#6190e8 clear-both'>
         <InfoCircleOutlined className='mr-4px' />
         <span className='mr-20px'>支持 Markdown 语法</span>
-        {context.loginInfo?.id ? (
+        {context.user?.id ? (
           <Tooltip title={!state.comment.trim() && '😊 说点什么...'}>
             <Button type='primary' onClick={addComment} loading={transition.state === 'loading'}>
               添加评论

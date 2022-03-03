@@ -1,8 +1,6 @@
 import { Anchor, Divider } from 'antd';
 import dayjs from 'dayjs';
-import {
-    ActionFunction, LoaderFunction, MetaFunction, redirect, useLoaderData, useOutletContext
-} from 'remix';
+import { LoaderFunction, MetaFunction, redirect, useLoaderData, useOutletContext } from 'remix';
 import Discuss from '~/components/Discuss/Discuss';
 import TagCate from '~/components/TagCate/TagCate';
 import config from '~/config.json';
@@ -18,7 +16,7 @@ import { api_get_post_by_id } from '../api/posts';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const data = await api_get_post_by_id(params.postId || '');
-  if (!data) throw Error('404');
+  if (!data) return redirect('/404');
   data.content = translateMd(data.content);
   return { data, postId: params.postId, hashList: data?.content ? getHashList(data.content) : [] };
 };

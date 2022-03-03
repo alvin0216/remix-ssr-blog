@@ -90,4 +90,5 @@ export async function api_delete_post(postId: string) {
   await db.category.deleteMany({ where: { postId } });
   await db.comment.deleteMany({ where: { postId } });
   await db.post.delete({ where: { id: postId } });
+  await db.msg.deleteMany({ where: { postId: postId } });
 }

@@ -43,7 +43,7 @@ model Category {
 
 
 model User {
-  id           String   @id @default(uuid())
+  id           Int     @id @default(autoincrement()) 
   createdAt    DateTime @default(now())
   username     String   
   // base on GithubInfo
@@ -62,7 +62,7 @@ model Comment {
   postId       String
   
   user         User     @relation(fields: [userId], references: [id])
-  userId       String
+  userId       Int
 
   reply        Reply[] 
 }
@@ -73,11 +73,19 @@ model Reply {
   createdAt    DateTime @default(now())
 
   user         User     @relation(fields: [userId], references: [id])
-  userId       String
+  userId       Int
 
   comment      Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   commentId    String
 
   // 评论回复评论
   replyId      String
+}
+
+model Msg {
+   id            Int     @id @default(autoincrement()) 
+   userId        Int
+   postId        String 
+   email         String
+   masterIsRead  Boolean @default(false)
 }

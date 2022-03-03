@@ -4,7 +4,7 @@ export interface AddCommentParams {
   redirectUrl: string;
   postId: string;
   comment: string;
-  userId: string;
+  userId: number;
 }
 
 export interface AddReplyParams {
@@ -12,7 +12,8 @@ export interface AddReplyParams {
   reply: string;
   commentId: string;
   replyId: string;
-  userId: string;
+  userId: number;
+  postId: string;
 }
 
 export type DiscussListItem = Comment & {
@@ -25,3 +26,5 @@ export type PostListItem = Post & {
   cate: Category[];
   comment: DiscussListItem[];
 };
+
+export type UserInfo = Omit<User, 'github'> & { github: GithubInfo };

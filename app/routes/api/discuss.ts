@@ -1,5 +1,5 @@
 import { ActionFunction, redirect } from 'remix';
-import { getUserProfile } from '~/auth.server';
+import { checkUserProfile } from '~/auth.server';
 import { parseFormData } from '~/utils';
 import { db } from '~/utils/db.server';
 
@@ -8,16 +8,36 @@ import type { AddCommentParams, AddReplyParams } from '~/export.types';
 export const action: ActionFunction = async ({ request }) => {
   const form = await parseFormData(request);
 
-  const user = await getUserProfile(request);
+  const { user, isMaster } = await checkUserProfile(request);
   const params = {
     ...form,
     userId: user.id,
+    email: user.email,
   };
 
-  if (form.actionType === 'api_add_comment') await api_add_comment(params);
-  if (form.actionType === 'api_remove_comment') await api_remove_comment(params);
-  if (form.actionType === 'api_add_reply') await api_add_reply(params);
-  if (form.actionType === 'api_remove_reply') await api_remove_reply(params);
+  switch (form.actionType) {
+    case 'api_add_comment':
+      await api_add_comment(params);
+      await api_add_msg(params);
+      break;
+
+    case 'api_add_reply':
+      await api_add_reply(params);
+      await api_add_msg(params);
+      break;
+
+    case 'api_remove_comment':
+      // 需要 master 权限
+      if (!isMaster) return redirect('/401');
+      await api_remove_comment(params);
+      break;
+
+    case 'api_remove_reply':
+      // 需要 master 权限
+      if (!isMaster) return redirect('/401');
+      await api_remove_reply(params);
+      break;
+  }
 
   return redirect(form.redirectUrl || request.url);
 };
@@ -51,4 +71,23 @@ export const api_remove_reply = async (form: { replyId: string; redirectUrl: str
   return db.reply.delete({
     where: { id: form.replyId },
   });
+};
+
+export const api_add_msg = async (params: any) => {
+  const data = await db.msg.findFirst({
+    where: {
+      postId: params.postId,
+      userId: params.userId,
+    },
+  });
+
+  if (!data) {
+    await db.msg.create({
+      data: {
+        postId: params.postId,
+        userId: params.userId,
+        email: params.email,
+      },
+    });
+  }
 };
