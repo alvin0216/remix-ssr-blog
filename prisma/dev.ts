@@ -4,21 +4,30 @@ import { PrismaClient } from '@prisma/client';
 
 const db = new PrismaClient();
 
-axios.get('https://api.github.com/users/alvin0216').then((res) => {
-  // console.log(res.data);
+// axios.get('https://api.github.com/users/alvin0216').then((res) => {
+//   // console.log(res.data);
 
-  db.user
-    .create({
-      data: {
-        id: res.data.id,
-        username: 'alvin0216',
-        github: JSON.stringify(res.data),
-      },
-    })
-    .catch((e) => {
-      console.log('error', e);
-    });
-});
+//   db.user
+//     .create({
+//       data: {
+//         id: res.data.id,
+//         username: 'alvin0216',
+//         github: JSON.stringify(res.data),
+//       },
+//     })
+//     .catch((e) => {
+//       console.log('error', e);
+//     });
+// });
+
+db.msg
+  .deleteMany({ where: { postId: '1024' } })
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((e) => {
+    console.log('error:', e);
+  });
 
 // 27bbb4f8-b057-460c-ab15-5bb18c8d62da
 // f8290a1b-f651-4824-a989-f694b0d0cf26

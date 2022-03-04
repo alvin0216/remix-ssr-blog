@@ -1,6 +1,7 @@
 import { Anchor, Divider } from 'antd';
 import dayjs from 'dayjs';
 import { LoaderFunction, MetaFunction, redirect, useLoaderData, useOutletContext } from 'remix';
+import { getUserProfile } from '~/auth.server';
 import Discuss from '~/components/Discuss/Discuss';
 import TagCate from '~/components/TagCate/TagCate';
 import config from '~/config.json';
@@ -8,6 +9,7 @@ import { PostListItem } from '~/export.types';
 import {
     getDiscussCount, getHashList, HashListItem, parseFormData, parseUrl, translateMd
 } from '~/utils';
+import { db } from '~/utils/db.server';
 
 import { CalendarOutlined } from '@ant-design/icons';
 
@@ -15,6 +17,11 @@ import NotFoundPage from '../404';
 import { api_get_post_by_id } from '../api/posts';
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  if (params.postId === '1024') return redirect('/about');
+  const { user } = await getUserProfile(request);
+  if (user) {
+    db.msg.deleteMany({ where: { postId: params.postId, userId: user.id } });
+  }
   const data = await api_get_post_by_id(params.postId || '');
   if (!data) return redirect('/404');
   data.content = translateMd(data.content);

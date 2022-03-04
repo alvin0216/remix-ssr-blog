@@ -33,11 +33,22 @@ declare interface GithubInfo {
   updated_at: string;
 }
 
+declare interface UnReadItem {
+  title: string | undefined;
+  id: number;
+  userId: number;
+  postId: string;
+  email: string;
+  masterIsRead: boolean;
+}
+
 declare interface GlobalContext {
   user?: GithubInfo;
   isMaster: boolean;
   tagList: { name: string; _count: number }[];
   tagColor: { [key: string]: string };
+  unReadList: UnReadItem[];
+  setUnReadList: (newList: UnReadItem[]) => void;
 }
 
 declare interface Page<T> {

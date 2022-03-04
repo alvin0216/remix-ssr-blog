@@ -1,14 +1,12 @@
 import { ActionFunction, createCookie, redirect } from 'remix';
+import { getUserProfile } from '~/auth.server';
 import { parseFormData } from '~/utils';
 import { db } from '~/utils/db.server';
 
 import type { PostListItem } from '~/export.types';
-
 export const action: ActionFunction = async ({ request }) => {
   const query = await parseFormData(request);
   const actionType = query.actionType;
-
-  console.log('query', query);
 
   if (actionType === 'api_get_posts') return api_get_posts(query);
   else if (actionType === 'api_delete_post') await api_delete_post(query.postId);

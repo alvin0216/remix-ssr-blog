@@ -45,6 +45,7 @@ model Category {
 model User {
   id           Int     @id @default(autoincrement()) 
   createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   username     String   
   // base on GithubInfo
   github       String   @db.Text

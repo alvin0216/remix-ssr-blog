@@ -1,6 +1,6 @@
 import { Button, Result, Spin } from 'antd';
 import antdStyles from 'antd/dist/antd.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
     ActionFunction, Form, json, Link, Links, LiveReload, Meta, Outlet, redirect, Scripts,
     ScrollRestoration, useLoaderData, useLocation, useTransition
@@ -10,6 +10,7 @@ import config from '~/config.json';
 
 import Layout from './components/Layout/Layout';
 import { api_get_tags } from './routes/api/cate';
+import { api_get_user_unread_msg } from './routes/api/user';
 import globalStyles from './styles/global.css';
 import mdStyles from './styles/md.css';
 import unoStyles from './styles/uno.css';
@@ -39,7 +40,7 @@ export const meta: MetaFunction = ({ location, parentsData }) => {
   };
 };
 
-export const loader: LoaderFunction = async ({ request }): Promise<GlobalContext> => {
+export const loader: LoaderFunction = async ({ request }) => {
   const { user, isMaster } = await getUserProfile(request);
   const tagList = await api_get_tags();
 
@@ -48,11 +49,17 @@ export const loader: LoaderFunction = async ({ request }): Promise<GlobalContext
     return map;
   }, {} as any);
 
+  let unReadList: UnReadItem[] = [];
+  if (user) {
+    unReadList = await api_get_user_unread_msg(user.id);
+  }
+
   return {
     user,
     isMaster,
     tagList,
     tagColor,
+    unReadList,
   };
 };
 
@@ -63,8 +70,15 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function App() {
-  const context = useLoaderData<GlobalContext>();
+  const loaderData = useLoaderData<GlobalContext>();
   const transition = useTransition();
+
+  const [unReadList, setUnReadList] = useState(loaderData.unReadList);
+  const context = {
+    ...loaderData,
+    unReadList,
+    setUnReadList,
+  };
 
   // result
   return (

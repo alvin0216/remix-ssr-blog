@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-export default function useModal() {
-  const [visible, setVisible] = useState(false);
+export default function useModal(defaultVisible: boolean = false) {
+  const [visible, setVisible] = useState(defaultVisible);
   const show = useCallback(() => setVisible(true), [visible]);
   const close = useCallback(() => setVisible(false), [visible]);
 
