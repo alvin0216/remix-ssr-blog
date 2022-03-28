@@ -87,7 +87,7 @@ export default function IndexPage() {
                       <img
                         className='wh-14 mr-4px'
                         alt='comment'
-                        src='https://gitee.com/alvin0216/cdn/raw/master/images/comment.png'
+                        src='https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/comment.png'
                       />
                       {count}
                     </span>
@@ -95,7 +95,7 @@ export default function IndexPage() {
                       <img
                         alt='viewCount'
                         className='wh-14 mr-4px -translate-y-1px'
-                        src='https://gitee.com/alvin0216/cdn/raw/master/images/view.png'
+                        src='https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/view.png'
                       />
                       <span>{item.view}</span>
                     </span>

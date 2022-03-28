@@ -3,14 +3,14 @@ githubLoginName: alvin0216
 
 # 博客logo
 # blogLogo: /logo.png
-blogLogo: https://gitee.com/alvin0216/cdn/raw/master/images/logo.png
+blogLogo: https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/logo.png
 
 # 博客名称
 blogName: Peace and Love
 
 # 侧边栏
 # avatar: /avatar.png
-avatar: https://gitee.com/alvin0216/cdn/raw/master/images/avatar.png
+avatar: https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/avatar.png
 
 # 侧边栏 图片下面的别名
 asideName: Alvin
@@ -22,10 +22,10 @@ motto: Web Developer & Designer
 social:
   github:
     link: https://github.com/alvin0216
-    icon: https://gitee.com/alvin0216/cdn/raw/master/images/github.png
+    icon: https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/github.png
   juejin:
     link: https://juejin.im/user/5acac6c4f265da2378408f92
-    icon: https://gitee.com/alvin0216/cdn/raw/master/images/juejin.png
+    icon: https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/juejin.png
 
 # 赞助
 # 感谢词
@@ -33,8 +33,8 @@ donateWord: 如果你觉得主题还不错，可以为作者贡献一杯奶茶�
 donate:
   # AliPay: /alipay.png
   # WeChat: /wechat.png
-  AliPay: https://gitee.com/alvin0216/cdn/raw/master/images/alipay.png
-  WeChat: https://gitee.com/alvin0216/cdn/raw/master/images/wechat.png
+  AliPay: https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/alipay.png
+  WeChat: https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/wechat.png
 
 # seo 相关
 seo:

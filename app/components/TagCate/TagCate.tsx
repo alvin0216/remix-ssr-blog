@@ -17,7 +17,7 @@ const TagCate: React.FC<TagCateProps> = (props) => {
       {props.tag.length > 0 && (
         <>
           <Divider type='vertical' className='mr-7px' />
-          <img className='wh-14 mr-7px' src='https://gitee.com/alvin0216/cdn/raw/master/images/tag.png' />
+          <img className='wh-14 mr-7px' src='https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/tag.png' />
 
           {props.tag.map((t, i) => (
             <TagCom key={t.id} color={props.tagColor[t.name]}>

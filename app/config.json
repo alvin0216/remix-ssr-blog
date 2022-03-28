@@ -1,1 +1,31 @@
-{"githubLoginName":"alvin0216","blogLogo":"https://gitee.com/alvin0216/cdn/raw/master/images/logo.png","blogName":"Peace and Love","avatar":"https://gitee.com/alvin0216/cdn/raw/master/images/avatar.png","asideName":"Alvin","motto":"Web Developer & Designer","social":{"github":{"link":"https://github.com/alvin0216","icon":"https://gitee.com/alvin0216/cdn/raw/master/images/github.png"},"juejin":{"link":"https://juejin.im/user/5acac6c4f265da2378408f92","icon":"https://gitee.com/alvin0216/cdn/raw/master/images/juejin.png"}},"donateWord":"如果你觉得主题还不错，可以为作者贡献一杯奶茶。","donate":{"AliPay":"https://gitee.com/alvin0216/cdn/raw/master/images/alipay.png","WeChat":"https://gitee.com/alvin0216/cdn/raw/master/images/wechat.png"},"seo":{"title":"Alvin's blog","author":"alvin","keywords":"alvin, remix, ssr, blog, react, frontend, 博客, Typescript","description":"Personal blog developed based on remix, 基于 remix 开发的个人博客","url":"https://remix.alvin.run"},"friendLinks":["Dan's blog","https://overreacted.io/","alvin's blog","https://alvin.run"]}
+{
+  "githubLoginName": "alvin0216",
+  "blogLogo": "https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/logo.png",
+  "blogName": "Peace and Love",
+  "avatar": "https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/avatar.png",
+  "asideName": "Alvin",
+  "motto": "Web Developer & Designer",
+  "social": {
+    "github": {
+      "link": "https://github.com/alvin0216",
+      "icon": "https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/github.png"
+    },
+    "juejin": {
+      "link": "https://juejin.im/user/5acac6c4f265da2378408f92",
+      "icon": "https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/juejin.png"
+    }
+  },
+  "donateWord": "如果你觉得主题还不错，可以为作者贡献一杯奶茶。",
+  "donate": {
+    "AliPay": "https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/alipay.png",
+    "WeChat": "https://alvin-cdn.oss-cn-shenzhen.aliyuncs.com/images/wechat.png"
+  },
+  "seo": {
+    "title": "Alvin's blog",
+    "author": "alvin",
+    "keywords": "alvin, remix, ssr, blog, react, frontend, 博客, Typescript",
+    "description": "Personal blog developed based on remix, 基于 remix 开发的个人博客",
+    "url": "https://remix.alvin.run"
+  },
+  "friendLinks": ["Dan's blog", "https://overreacted.io/", "alvin's blog", "https://alvin.run"]
+}
